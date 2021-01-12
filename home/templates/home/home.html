@@ -1,0 +1,174 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home-style.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+			rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  </head>
+  <body>
+   <nav class="navbar navbar-expand-lg navbar-dark bg-white">
+       <a class="logo" class="navbar-brand" href={% url 'home' %}><img src="{% static 'images/logo2.png' %}" style="height: 64px; width: 150px"></a>
+      <button class="navbar-toggler" type="button" ddata-toggle="collapse" data-target=".navbar-collapse">
+        <span class="navbar-toggler-icon" href=""></span>
+
+      </button>
+
+      <div class="navbar-collapse collapse " >
+        <ul class="navbar-nav navbar-center ">
+          <li class="nav-item"><a class="nav-link active" href="{% url 'whatsInside' %}" >WHAT'S INSIDE </a></li>
+            <li class="nav-item"><a class="nav-link " href="{% url 'givegift' %}" >GIVE A GIFT</a></li>
+            <li class="nav-item"><a class="nav-link " href="{% url 'contact' %}" >ABOUT US</a></li>
+        </ul>
+      </div>
+
+
+              <div class="navbar-nav navbar-right">
+                  {% if request.user.is_authenticated %}
+
+                  <div class="dropdown">
+                      <a href="#" class="btn btn-light dropdown-toggle"
+                      role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                         aria-haspopup="true" aria-expanded="false">
+                          <i class="far fa-user" style="margin-right: 1em;"></i>Hello, {{ request.user.customer.name }} !
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                          <a class="dropdown-item" href="{% url 'myprofile' %}">My Profile</a>
+                          <a class="dropdown-item" href="{% url 'order-detail' %}">My Orders</a>
+                          <a class="dropdown-item" href="{% url 'blog' %}">Blog</a>
+                          <a href="{% url 'logout' %}" id="logout" class="btn btn-warning dropdown-item">Logout</a>
+                      </div>
+                  </div>
+                  {% else %}
+                      <a href="{% url 'login' %}" class="nav-link "><i class="fas fa-user"></i></a>
+
+                  {% endif %}
+                  <a href="#" class="nav-link "><i class="fas fa-search"></i></a>
+                  <a href="#" class="nav-link" data-toggle="modal" data-target="#myModal"><i class="fas fa-shopping-cart"></i></a>
+              </div>
+
+   </nav>
+
+
+
+<div class="container-fluid">
+    <br>
+    {% block content %}
+    {% endblock content %}
+</div>
+
+  <footer class="footer-distributed">
+		<div class="footer-left">
+        <img src="{% static 'images/logo2.png' %}" style="height: 64px; width: 150px">
+
+
+		<p class="footer-links">
+		<a href="#">Home</a>
+	·
+		<a href="#">Blog</a>
+	·
+		<a href="#">Pricing</a>
+	·
+		<a href="#">About</a>
+	·
+		<a href="#">Faq</a>
+	·
+		<a href="{% url 'contact' %}">Contact</a>
+		</p>
+
+		<p class="footer-company-name">GIFTBOX &copy; 2019</p>
+		</div>
+
+		<div class="footer-center">
+
+		<div>
+		<i class="fas fa-map-marker"></i>
+		<p><span>21 Revolution Street</span> Delhi, India</p>
+		</div>
+
+		<div>
+		<i class="fas fa-phone"></i>
+		<p>+1 555 123456</p>
+		</div>
+
+		<div>
+		<i class="fas fa-envelope"></i>
+		<p><a href="mailto:support@company.com">contact@webdevtrick.com</a></p>
+		</div>
+
+		</div>
+
+		<div class="footer-right">
+
+		<p class="footer-company-about">
+		<span>About the company</span>
+	GıftBox is a website service for customers who wants to order personalized gift boxes.
+		</p>
+
+		<div class="footer-icons">
+
+		<a href="#"><i class="fab fa-facebook-square"></i></a>
+		<a href="#"><i class="fab fa-twitter-square"></i></a>
+		<a href="#"><i class="fab fa-instagram-square"></i></a>
+		<a href="#"><i class="fab fa-github"></i></a>
+
+		</div>
+
+		</div>
+
+		</footer>
+
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="row">
+        <div class="container d-flex justify-content-end" style="margin-top: 100px;">
+            <div class="col-sm-5">
+                <div class="text-end mt-30"><a href="{% url 'home' %}" id="close-modal">X</a></div>
+                <div class="card text-center" style="width: 60%;height:200px;background-color: whitesmoke;">
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6 mb-2 mb-md-0">
+                                <p> 1 item(s)</p>
+                            </div>
+                            <div class="col-sm-6">
+                                <p>Subtotal</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4 mb-2 mb-md-0"> <a href="{% url 'checkout' %}" class="btn btn-out
+                            btn-success btn-square btn-block"> <i class="fas fa-money-check"></i> Checkout</a> </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4 " > <a href="{% url 'cart' %}" class="btn btn-out btn-success
+                            btn-square btn-block"><i class="fas fa-shopping-cart"></i> View Chart</a> </div>
+                        </div>
+                    </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+		  integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+  </body>
+</html>
+

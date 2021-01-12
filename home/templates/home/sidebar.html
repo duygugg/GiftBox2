@@ -1,0 +1,78 @@
+{% load static %}
+<aside class="col-lg-4">
+    <!-- Widget [Search Bar Widget]-->
+    <div class="widget search">
+    <form action="" class="search-form">
+        <div class="form-group">
+        <input type="text" name="q" placeholder="Search Posts">
+        <button type="submit" class="submit"><i class="fas fa-search"></i></button>
+        </div>
+    </form>
+    </div>
+    <!-- Widget [Latest Posts Widget]        -->
+    <div class="widget latest-posts">
+    <header>
+        <h3 class="h6">Latest Posts</h3>
+    </header>
+    <div class="blog-posts">
+
+        <a href="{{ post.get_absolute_url }}">
+            <div class="item d-flex align-items-center">
+            <div class="image"><img src="{% static 'images/blogimagetools.jpg' %}" alt="..." class="img-fluid"></div>
+            <div class="title"><strong>Post Title</strong>
+                <div class="d-flex align-items-center">
+                <div class="views"><i class="icon-eye"></i> 523</div>
+                <div class="comments"><i class="icon-comment"></i>58</div>
+                </div>
+            </div>
+            </div>
+        </a>
+
+        <a href="{{ post.get_absolute_url }}">
+            <div class="item d-flex align-items-center">
+            <div class="image"><img src="{% static 'images/blogimagetools.jpg' %}" alt="..." class="img-fluid"></div>
+            <div class="title"><strong>Post Title</strong>
+                <div class="d-flex align-items-center">
+                <div class="views"><i class="icon-eye"></i> 100</div>
+                <div class="comments"><i class="icon-comment"></i>6</div>
+                </div>
+            </div>
+            </div>
+        </a>
+
+        <a href="{{ post.get_absolute_url }}">
+            <div class="item d-flex align-items-center">
+            <div class="image"><img src="{% static 'images/blogimagetools.jpg' %}" alt="..." class="img-fluid"></div>
+            <div class="title"><strong>Post Title</strong>
+                <div class="d-flex align-items-center">
+                <div class="views"><i class="icon-eye"></i> 700</div>
+                <div class="comments"><i class="icon-comment"></i>6</div>
+                </div>
+            </div>
+            </div>
+        </a>
+
+    </div>
+    <!-- Widget [Categories Widget]-->
+    <div class="widget categories">
+    <header>
+        <h3 class="h6">Categories</h3>
+    </header>
+
+    <div class="item d-flex justify-content-between">
+        <a href="#">category</a><span>5</span>
+    </div>
+     <div class="item d-flex justify-content-between">
+        <a href="#">category</a><span>3</span>
+    </div>
+     <div class="item d-flex justify-content-between">
+        <a href="#">category</a><span>10</span>
+    </div>
+     <div class="item d-flex justify-content-between">
+        <a href="#">category</a><span>7</span>
+    </div>
+
+
+    </div>
+
+</aside>

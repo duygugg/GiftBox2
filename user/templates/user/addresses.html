@@ -1,0 +1,74 @@
+{% extends 'home/home.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+        .profile-pic {
+            max-width: 150px;
+            max-height: 150px;
+            margin: -2em auto 1em;
+
+        }
+</style>
+
+<div class="px-3">
+    <button type="button" class="btn btn-light bg-white text-black-50">
+        <i class="fas fa-arrow-left text-black-50"></i>
+        <a href="{% url 'home' %}" style="text-decoration: none;color: #8f9296">Go Back</a>
+    </button>
+</div>
+<div class="container pb-5 px-5">
+    <h3 class="py-2">User Profile</h3>
+    <div class="row">
+        <div class="col-2">
+            <div class="py-3">
+                <img class="profile-pic" src="{{ request.user.customer.profile_pic.url }}">
+            </div>
+            <ul class="nav flex-column py-4">
+                <li class="nav-item border-bottom">
+                    <a class="nav-link active text-dark" aria-current="page" href="{% url 'favorites' %}">Favourites</a>
+                </li>
+                <li class="nav-item border-bottom">
+                    <a class="nav-link text-dark" href="{% url 'friends-list' %}">Friends</a>
+                </li>
+                <li class="nav-item border-bottom">
+                    <a class="nav-link text-dark" href="{% url 'order-detail' %}">Orders</a>
+                </li>
+                <li class="nav-item border-bottom">
+                    <a class="nav-link text-dark" href="{% url 'messages' %}" tabindex="-1" aria-disabled="true">Messages</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-10 py-3 px-3">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link  text-dark"  href="{% url 'myprofile' %}">Profile</a>
+                </li>
+
+                 <!-- <li class="nav-item">
+                    <a class="nav-link  text-dark" href="#">Purchase Info</a>
+                </li> -->
+
+                <li class="nav-item">
+                    <a class="nav-link active text-dark" aria-current="page" href="{% url 'myaddresses' %}">Addresses</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link  text-dark" href="{% url 'change_password' %}" tabindex="-1" aria-disabled="true">Change Password</a>
+                </li>
+            </ul>
+
+            <h3 class="py-3 text-black-50" style="font-size: 23px;">Address Information</h3>
+            <form method="POST" action="" >
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="d-flex flex-row-reverse">
+                        <button class="btn btn-light btn-table btn-save justify-content-end mx-5" type="submit" name="button"
+                    ><i class="fas fa-save px-1 text-black-50"></i>Save Changes</button>
+                </div>
+
+            </form>
+    </div>
+
+</div>
+
+{% endblock content %}

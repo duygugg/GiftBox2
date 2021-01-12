@@ -1,0 +1,50 @@
+{%  extends 'home/home.html' %}
+{% load static %}
+
+{% block content %}
+<div class="px-3">
+    <button type="button" class="btn btn-light bg-white text-black-50">
+        <i class="fas fa-arrow-left text-black-50"></i>
+        <a href="{% url 'home' %}" style="text-decoration: none;color: #8f9296">Go Back</a>
+    </button>
+</div>
+    <div class="wrapper">
+            <div class="heading">
+                <h1>Start exploring the <strong style="color: coral">GiftBox </strong></h1>
+                <p>Start preparing a Gift for yourself or beloved ones!</p>
+            </div>
+    <div class="card" >
+        <div class="card-body">
+            <div class="card-text">Select category for the gift</div>
+            <select title="category_options" class="custom-select custom-select-lg mb-3">
+                <option disabled>Category</option>
+                <option value="1">Christmas</option>
+                <option value="2">Fall</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="card" >
+        <div class="card-body">
+            <div class="card-text">Select the person who you’re buying to</div>
+            <select class="custom-select custom-select-lg mb-3">
+                <option disabled>Person</option>
+                <option value="1">Partner</option>
+                <option value="2">Friend</option>
+                <option value="2">Family</option>
+                <option value="2">Yourself</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <a class="btn btn-success btn-lg active" href="{% url 'questions' %}"
+           style="text-decoration: none;color: white;">NEXT</a>
+
+    </div>
+
+    </div>
+
+
+
+{% endblock content %}

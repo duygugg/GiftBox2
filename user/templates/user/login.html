@@ -1,0 +1,49 @@
+{% extends 'home/home.html' %}
+
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+
+<div class="container login-container">
+            <div class="row">
+                <div class="col-md-5 login-form-2">
+                    <div class="login-logo">
+                        <img src="{% static 'images/usericon.png' %}">
+
+                    </div>
+
+                        <div class="form-group">
+                            <form method="POST">
+                                {% csrf_token %}
+                                <div class="form-group text-center">
+                                    <label for="username" style="display: block;text-align: center;"><b>Username:</b></label>
+                                    {{ form.username}}
+                                </div>
+                                <div class="form-group text-center">
+                                    <label for="password" style="display: block;text-align: center;"><b>Password:</b></label>
+                                    {{ form.password}}
+                                </div>
+                                    <div class="form-group text-center">
+                                        <button type="submit" class="btn btnSubmit" id="login-page-button"
+                                       style="text-decoration: none;color: white;">Login</button>
+                                    </div>
+
+                            </form>
+
+                        </div>
+                        <div class="form-group text-center">
+                            <a href="#" class="btnForgetPwd" value="Login">Forget Password?</a>
+                        </div>
+                    </form>
+                    <h2 class="text-signup" style="font-size: 20px">If you dont have a account <a href="{% url 'signup' %}">join us</a></h2>
+                </div>
+            </div>
+        </div>
+{% endblock %}

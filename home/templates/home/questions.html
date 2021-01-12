@@ -1,0 +1,43 @@
+{%  extends 'home/home.html' %}
+{% load static %}
+
+{% block content %}
+<div class="px-3">
+    <button type="button" class="btn btn-light bg-white text-black-50">
+        <i class="fas fa-arrow-left text-black-50"></i>
+        <a href="{% url 'givegift' %}" style="text-decoration: none;color: #8f9296">Go Back</a>
+    </button>
+</div>
+<div class="wrapper">
+    <div class="heading">
+        <h1>Start exploring the <strong style="color: coral">GiftBox </strong></h1>
+        <p>Start preparing a Gift for yourself or beloved ones!</p>
+    </div>
+<div class="card card-custom">
+        <div class="card-body card-body-custom">
+            <form action="#" method="POST">
+                <div class="form-group">
+                    {% for question in questions %}
+                    <div class="card-text custom-text">
+                        <label>{{ allquestionwithanswer.question.question_text }} </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                        <label class="form-check-label" for="inlineRadio1">Choice 1</label>
+                    </div>
+                    {% endfor %}
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <div class="text-center">
+        <a class="btn btn-success btn-lg active" href="{% url 'giftcart-display' %}"
+           style="text-decoration: none;color: white;">NEXT</a>
+    </div>
+
+
+</div>
+
+
+{% endblock content %}

@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo:wght@300&display=swap');
+
+.login-container{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border: none;
+    border-radius: 1.5rem;
+}
+
+.login-logo img{
+    width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin-bottom: 50px;
+}
+
+.login-form-2{
+    padding: 9%;
+    background: white;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 15px 0 rgba(0, 0, 0, 0.19);
+    border: solid #f5832b;
+    border-radius: 1.5rem;
+    margin: auto;
+}
+.form-group input{
+    width: 60%;
+    padding: 5px;
+    margin: 10px auto;
+}
+.btnSubmit{
+    font-family: 'Exo', sans-serif !important;
+    font-weight: bolder;
+    margin: 40px auto;
+    font-weight: 600;
+    width: 100%; !important;
+    color: #282726;
+    background-color: #f5832b;
+    border: none;
+    border-radius: 1.5rem;
+    padding:5%;
+}
+.btnForgetPwd, .text-signup{
+    text-align: center;
+    margin: auto;
+    color: coral;
+    font-weight: 600;
+    text-decoration: none;
+    font-family: 'Exo', sans-serif !important;
+}
+.text-signup a{
+    text-decoration: none!important;
+    color: #18ab29;
+}
+.btnForgetPwd:hover, .text-signup a:hover{
+    text-decoration:none;
+    color:gray;
+}

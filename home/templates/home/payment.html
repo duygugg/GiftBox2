@@ -1,0 +1,117 @@
+{% extends 'home/home.html' %}
+{% load static %}
+{% block content %}
+
+
+	<div class="px-3">
+		<button type="button"class="btn btn-light bg-white text-black-50">
+            <i class="fas fa-arrow-left text-black-50"></i>
+            <a href="{% url 'home' %}" style="text-decoration: none;color: #8f9296">Go Back</a>
+        </button>
+	</div>
+	<div class="container pb-5 py-2">
+		<div class="d-flex justify-content-center">
+			<h4 class="gift-wrapper">Start Preparing a <span class="gift">Gift</span> For You and Your Loved Ones</h4>
+		</div>
+
+		<div class="d-flex justify-content-center my-4">
+			<div class="col-6 border rounded py-1 mx-2 border-form">
+				<h3 class="py-2 px-2">Shipping Information</h3>
+				<form class="px-3">
+					<div class="mb-3">
+						<label for="exampleInputEmail1" class="form-label">City</label>
+						<input type="email" class="form-control" id="exampleInputEmail1">
+					</div>
+					<div class="mb-3">
+						<label for="exampleInputPassword1" class="form-label">Province</label>
+						<input type="password" class="form-control" id="exampleInputPassword1">
+					</div>
+					<div class="mb-3">
+						<label for="exampleInputPassword1" class="form-label">Address</label>
+						<textarea name="exampleInputPassword1" id="" cols="30" rows="5" class="form-control"></textarea>
+					</div>
+				</form>
+
+				<h3 class="py-4 px-2">Purchase Information</h3>
+				<form class="px-3">
+					<div class="mb-3">
+						<label for="card" class="form-label">Credit Card</label>
+						<input type="text" class="form-control" id="card">
+					</div>
+					<div class="mb-3">
+						<label for="secure" class="form-label">Security Code</label>
+						<input type="text" class="form-control" id="secure">
+					</div>
+					<div class="mb-3">
+						<label for="date" class="form-label">End Date</label>
+						<input type="date" id="date" class="form-control">
+					</div>
+				</form>
+			</div>
+
+			<div class="col-6 d-flex flex-column">
+				<div class="border rounded py-1 mx-2">
+					<h3 class="py-2 px-2">Gift Items Summary</h3>
+					<div class="container my-5">
+						<table class="table table-responsive-md payment">
+							<tbody>
+							<tr class="py-5">
+								<td>
+									<input type="checkbox" checked></input>
+								</td>
+								<td class="text-center"><i class="fas fa-laptop fs-3 text-black-50"></i></td>
+								<td>Lenovo Laptop</td>
+								<td>$1024</td>
+								<td>5</td>
+							</tr>
+							<tr>
+								<td>
+									<input type="checkbox" checked></input>
+								</td>
+								<td class="text-center"><i class="fas fa-laptop fs-3 text-black-50"></i></td>
+								<td>Asus Laptop</td>
+								<td>$1224</td>
+								<td>3</td>
+							</tr>
+							<tr>
+								<td>
+									<input type="checkbox" checked></input>
+								</td>
+								<td class="text-center"><i class="fas fa-mouse fs-3 text-black-50"></i></td>
+								<td>Logitech Mouse</td>
+								<td>$104</td>
+								<td>2</td>
+							</tr>
+							<tr>
+								<td>
+									<input type="checkbox" checked></input>
+								</td>
+								<td class="text-center"><i class="fas fa-keyboard fs-3 text-black-50"></i></td>
+								<td>Keyboard</td>
+								<td>$34</td>
+								<td>10</td>
+							</tr>
+							</tbody>
+						</table>
+
+						<h3 class="py-3 text-black-50"> Total Price: $2386</h3>
+					</div>
+				</div>
+
+				<div class="border rounded py-3 mx-2 my-4">
+					<div class="mb-3 container">
+						<label for="name" class="form-label">Send Gift To: </label>
+						<input type="text" class="form-control" id="name">
+					</div>
+				</div>
+
+				<div class="d-flex flex-row-reverse my-2">
+					<button type="button" class="btn btn-light btn-table text-black-50 py-2"><i class="fas fa-gift text-black-50 px-2"></i>Complete Purchase</button>
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+
+{% endblock content %}

@@ -1,0 +1,168 @@
+{% extends 'home/home.html' %}
+{% load static %}
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
+    <div class="container">
+      <div class="row">
+        <!-- Latest Posts -->
+        <main class="posts-listing col-lg-8">
+          <div class="container">
+            <div class="row">
+              <!-- post -->
+
+              <div class="post col-xl-6">
+                <div class="post-thumbnail"><a href="{{ post.get_absolute_url }}">
+                    <img src="{% static 'images/blogimagetools.jpg' %}" alt="..." class="img-fluid"></a></div>
+                <div class="post-details">
+                  <div class="post-meta d-flex justify-content-between">
+                    {% comment %} <div class="date meta-last">20 May | 2016</div> {% endcomment %}
+                    <div class="category">
+                    <a href="#">{{ cat }}</a>
+                    </div>
+                  </div><a href="{{ post.get_absolute_url }}">
+                    <h3 class="h4">Post title</h3></a>
+                  <p class="text-muted">Lorem Ipsum is simply dummy text of the printing and typesetting
+                      industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                      when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                      It has survived not only five centuries, but also the leap into electronic typesetting, remaining
+                      essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets
+                      containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus
+                      PageMaker including versions of Lorem Ipsum.</p>
+                    <a class="btn btn-info" href="{% url 'post-details' %}"
+                       style="margin-bottom: 10px;color: whitesmoke;border-radius: 20px!important;"> Read More</a>
+                  <footer class="post-footer d-flex align-items-center">
+                    <a href="#" class="author d-flex align-items-center flex-wrap">
+                      <div class="avatar"><img src="{% static 'images/usericon.png' %}" alt="..." class="img-fluid"></div>
+                      <div class="title"><span>Sarah Marshall</span></div>
+                    </a>
+                    <div class="date"><i class="icon-clock"></i>2 mins ago</div>
+                    <div class="comments meta-last"><i class="icon-comment"></i>58</div>
+                  </footer>
+                </div>
+              </div>
+                <div class="post col-xl-6">
+                <div class="post-thumbnail"><a href="{{ post.get_absolute_url }}">
+                    <img src="{% static 'images/blogimagetools.jpg' %}" alt="..." class="img-fluid"></a></div>
+                <div class="post-details">
+                  <div class="post-meta d-flex justify-content-between">
+                    {% comment %} <div class="date meta-last">20 May | 2016</div> {% endcomment %}
+                    <div class="category">
+                    <a href="#">{{ cat }}</a>
+                    </div>
+                  </div><a href="{{ post.get_absolute_url }}">
+                    <h3 class="h4">Post title</h3></a>
+                  <p class="text-muted">Lorem Ipsum is simply dummy text of the printing and typesetting
+                      industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                      when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                      It has survived not only five centuries, but also the leap into electronic typesetting, remaining
+                      essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets
+                      containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus
+                      PageMaker including versions of Lorem Ipsum.</p>
+                    <a class="btn btn-info" href="{% url 'post-details' %}"
+                       style="margin-bottom: 10px;color: whitesmoke;border-radius: 20px!important;"> Read More</a>
+                  <footer class="post-footer d-flex align-items-center">
+                    <a href="#" class="author d-flex align-items-center flex-wrap">
+                      <div class="avatar"><img src="{% static 'images/usericon.png' %}" alt="..." class="img-fluid"></div>
+                      <div class="title"><span>Sarah Marshall</span></div>
+                    </a>
+                    <div class="date"><i class="icon-clock"></i>2 mins ago</div>
+                    <div class="comments meta-last"><i class="icon-comment"></i>6</div>
+                  </footer>
+                </div>
+              </div>
+                <div class="post col-xl-6">
+                <div class="post-thumbnail"><a href="{{ post.get_absolute_url }}"><img src="{% static 'images/blogimagetools.jpg' %}" alt="..." class="img-fluid"></a></div>
+                <div class="post-details">
+                  <div class="post-meta d-flex justify-content-between">
+                    {% comment %} <div class="date meta-last">20 May | 2016</div> {% endcomment %}
+                    <div class="category">
+                    <a href="#">{{ cat }}</a>
+                    </div>
+                  </div><a href="{{ post.get_absolute_url }}">
+                    <h3 class="h4">Post title</h3></a>
+                  <p class="text-muted">Lorem Ipsum is simply dummy text of the printing and typesetting
+                      industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                      when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                      It has survived not only five centuries, but also the leap into electronic typesetting, remaining
+                      essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets
+                      containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus
+                      PageMaker including versions of Lorem Ipsum.</p>
+                    <a class="btn btn-info" href="{% url 'post-details' %}"
+                       style="margin-bottom: 10px;color: whitesmoke;border-radius: 20px!important;"> Read More</a>
+                  <footer class="post-footer d-flex align-items-center">
+                    <a href="#" class="author d-flex align-items-center flex-wrap">
+                      <div class="avatar"><img src="{% static 'images/usericon.png' %}" alt="..." class="img-fluid"></div>
+                      <div class="title"><span>Sarah Marshall</span></div>
+                    </a>
+                    <div class="date"><i class="icon-clock"></i>2 mins ago</div>
+                    <div class="comments meta-last"><i class="icon-comment"></i>6</div>
+                  </footer>
+                </div>
+              </div>
+                <div class="post col-xl-6">
+                <div class="post-thumbnail"><a href="{{ post.get_absolute_url }}"><img src="{% static 'images/blogimagetools.jpg' %}" alt="..." class="img-fluid"></a></div>
+                <div class="post-details">
+                  <div class="post-meta d-flex justify-content-between">
+                    {% comment %} <div class="date meta-last">20 May | 2016</div> {% endcomment %}
+                    <div class="category">
+                    <a href="#">{{ cat }}</a>
+                    </div>
+                  </div><a href="{{ post.get_absolute_url }}">
+                    <h3 class="h4">Post title</h3></a>
+                  <p class="text-muted">Lorem Ipsum is simply dummy text of the printing and typesetting
+                      industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                      when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                      It has survived not only five centuries, but also the leap into electronic typesetting, remaining
+                      essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets
+                      containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus
+                      PageMaker including versions of Lorem Ipsum.</p>
+                    <a class="btn btn-info" href="{% url 'post-details' %}"
+                       style="margin-bottom: 10px;color: whitesmoke;border-radius: 20px!important;"> Read More</a>
+                  <footer class="post-footer d-flex align-items-center">
+                    <a href="#" class="author d-flex align-items-center flex-wrap">
+                      <div class="avatar"><img src="{% static 'images/usericon.png' %}" alt="..." class="img-fluid"></div>
+                      <div class="title"><span>Sarah Marshall</span></div>
+                    </a>
+                    <div class="date"><i class="icon-clock"></i>2 mins ago</div>
+                    <div class="comments meta-last"><i class="icon-comment"></i>6</div>
+                  </footer>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pagination -->
+            <nav aria-label="Page navigation example">
+              <ul class="pagination pagination-template d-flex justify-content-center">
+
+                <li class="page-item"><a href="?{{ page_request_var }}={{ queryset.previous_page_number }}" class="page-link"> <i class="fa fa-angle-left"></i></a></li>
+
+                <li class="page-item"><a href="?{{ page_request_var }}={{ queryset.number }}" class="page-link active">1</a></li>
+
+                <li class="page-item"><a href="?{{ page_request_var }}={{ queryset.next_page_number }}" class="page-link"> <i class="fa fa-angle-right"></i></a></li>
+
+              </ul>
+            </nav>
+
+            {% if is_paginated %}
+
+            <nav aria-label="Page navigation example">
+              <ul class="pagination pagination-template d-flex justify-content-center">
+                {% if page_obj.has_previous %}
+                <li class="page-item"><a href="?{{ page_request_var }}={{ page_obj.previous_page_number }}" class="page-link"> <i class="fa fa-angle-left"></i></a></li>
+                {% endif %}
+                <li class="page-item"><a href="?{{ page_request_var }}={{ page_obj.number }}" class="page-link active">{{ page_obj.number }}</a></li>
+                {% if page_obj.has_next %}
+                <li class="page-item"><a href="?{{ page_request_var }}={{ page_obj.next_page_number }}" class="page-link"> <i class="fa fa-angle-right"></i></a></li>
+                {% endif %}
+              </ul>
+            </nav>
+
+            {% endif %}
+          </div>
+        </main>
+      {% include 'home/sidebar.html' with most_recent=most_recent category_count=category_count %}
+
+      </div>
+    </div>
+
+{% endblock content %}

@@ -1,0 +1,211 @@
+{% extends "home/home.html" %}
+{% load static %}
+{% block content %}
+<script type="text/javascript" src="{% static 'js/giftcart.js' %}"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="box-element" style="width: 90%;margin: 0 auto">
+            <div class="px-3">
+                <button type="button" class="btn btn-light bg-white text-black-50">
+                    <i class="fas fa-arrow-left text-black-50"></i>
+                    <a href="{% url 'questions' %}" style="text-decoration: none;color: #8f9296">Go Back</a>
+                </button>
+            </div>
+            <div class="wrapper">
+            <div class="heading">
+                <h1>Start exploring the <strong style="color: coral">GiftBox </strong></h1>
+                <p>Start preparing a Gift for yourself or beloved ones!</p>
+
+
+            <table class="table" >
+                <tr>
+                    <th><h5>Items: <strong style="font-family: 'Nunito', sans-serif">10</strong></h5></th>
+                    <th><h5>Total: <strong style="font-family: 'Nunito', sans-serif">5632.85 $</strong></h5></th>
+                    <th>
+                        <a style="float:right; margin:5px;" class="btn btn-success"
+                           href="{% url 'checkout' %}">Checkout</a>
+                    </th>
+                </tr>
+
+            </table>
+            <hr>
+        </div>
+
+        <br>
+        <div class="box-element" style="width: 70%; margin: 0 auto 50px;">
+            <div class="cart-row">
+                <div style="flex:2"></div>
+                <div style="flex:2"><strong>Item</strong></div>
+                <div style="flex:1"><strong>Price</strong></div>
+                <div style="flex:1"><strong>Quantity</strong></div>
+                <div style="flex:1"><strong>Total</strong></div>
+            </div>
+
+            <div class="cart-row">
+                <div style="flex:2"><img class="row-image" src="{% static 'images/product.png' %}"></div>
+                <div style="flex:2"><p>Gift Name</p></div>
+                <div style="flex:1"><p>{{105.95|floatformat:2}} $</p></div>
+                <div style="flex:1">
+                    <div class="input-group input-number-group">
+                        <div class="input-group-button">
+                            <span class="input-number-decrement btn btn-danger">-</span>
+                        </div>
+                        <input class="input-number" type="number" value="1" min="0" max="1000">
+                        <div class="input-group-button ">
+                            <span class="input-number-increment btn btn-success" style="text-align: center">+</span>
+                        </div>
+                    </div>
+
+                </div>
+                <div style="flex:1;text-align: center"><p> 420$</p></div>
+            </div>
+            <div class="cart-row">
+                <div style="flex:2"> <img class="row-image" src="{% static 'images/product.png' %}"></div>
+                <div style="flex:2"><p>Gift Name</p></div>
+                <div style="flex:1"><p>{{105.95|floatformat:2}} $</p></div>
+                <div style="flex:1">
+                    <div class="input-group input-number-group">
+                        <div class="input-group-button">
+                            <span class="input-number-decrement btn btn-danger">-</span>
+                        </div>
+                        <input class="input-number" type="number" value="1" min="0" max="1000">
+                        <div class="input-group-button ">
+                            <span class="input-number-increment btn btn-success">+</span>
+                        </div>
+                    </div>
+                </div>
+                <div style="flex:1;text-align: center"><p> 420$</p></div>
+            </div>
+            <div class="cart-row">
+                <div style="flex:2"><img class="row-image" src="{% static 'images/product.png' %}"></div>
+                <div style="flex:2"><p>Gift Name</p></div>
+                <div style="flex:1"><p>{{105.95|floatformat:2}} $</p></div>
+                <div style="flex:1">
+                    <div class="input-group input-number-group">
+                        <div class="input-group-button">
+                            <span class="input-number-decrement btn btn-danger">-</span>
+                        </div>
+                        <input class="input-number" type="number" value="1" min="0" max="1000">
+                        <div class="input-group-button ">
+                            <span class="input-number-increment btn btn-success">+</span>
+                        </div>
+                    </div>
+                </div>
+                <div style="flex:1;text-align: center"><p> 420$</p></div>
+            </div>
+            <div class="cart-row">
+                <div style="flex:2"><img class="row-image" src="{% static 'images/product.png' %}"></div>
+                <div style="flex:2"><p>Gift Name</p></div>
+                <div style="flex:1"><p>{{105.95|floatformat:2}} $</p></div>
+                <div style="flex:1">
+                   <div class="input-group input-number-group">
+                        <div class="input-group-button">
+                            <span class="input-number-decrement btn btn-danger">-</span>
+                        </div>
+                        <input class="input-number" type="number" value="1" min="0" max="1000">
+                        <div class="input-group-button ">
+                            <span class="input-number-increment btn btn-success">+</span>
+                        </div>
+                   </div>
+                </div>
+                <div style="flex:1;text-align: center"><p> 420$</p></div>
+            </div>
+            <div class="text-center">
+                <a class="btn btn-success btn-lg active" href="{% url 'checkout' %}"
+               style="text-decoration: none;color: white;">NEXT</a>
+        </div>
+        </div>
+            </div>
+</div>
+
+
+
+
+
+<style>
+.input-number-group {
+  margin:auto;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.input-number-group input[type=number]::-webkit-inner-spin-button,
+.input-number-group input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+    appearance: none;
+}
+
+.input-number-group .input-group-button {
+  line-height: calc(80px/2 - 5px);
+}
+
+.input-number-group .input-number {
+  width: 50px;
+  padding: 0 12px;
+  vertical-align: top;
+  text-align: center !important;
+  outline: none;
+  display: block;
+  margin: 0;
+}
+
+.input-number-group .input-number,
+.input-number-group .input-number-decrement,
+.input-number-group .input-number-increment {
+  border: 1px solid #cacaca;
+  height: 47px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  border-radius: 0;
+
+
+}
+
+
+.input-number-group .input-number-decrement,
+.input-number-group .input-number-increment {
+  display: inline-block;
+  width: 36px;
+  color: white;
+  text-align: center !important;
+  font-weight: bolder;
+  cursor: pointer;
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.input-number-group .input-number-decrement {
+
+  margin-right: 0.3rem;
+  text-align: center!important;
+}
+
+.input-number-group .input-number-increment {
+
+  margin-left: 0.3rem;
+  text-align: center!important;
+}
+
+</style>
+<script>
+$('.input-number-increment').click(function() {
+  var $input = $(this).parents('.input-number-group').find('.input-number');
+  var val = parseInt($input.val(), 10);
+  $input.val(val + 1);
+});
+
+$('.input-number-decrement').click(function() {
+  var $input = $(this).parents('.input-number-group').find('.input-number');
+  var val = parseInt($input.val(), 10);
+  $input.val(val - 1);
+})
+</script>
+{% endblock content %}

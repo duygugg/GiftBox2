@@ -1,0 +1,55 @@
+{%  extends 'home/home.html' %}
+{% load static %}
+{% block content %}
+    <div class="banner banner-slide-1 " >
+      <div class="banner-container">
+          <div class="banner-text" >
+              <h1>GIFTBOX</h1>
+              <span>Customized giftbox's are prepared</span>
+              <span>with the help of AI</span>
+              <span>Starting at only <strong>$12.99</strong></span>
+              <a class="button" href={% url 'givegift' %}>GET GIFTBOX</a>
+          </div>
+      </div>
+  </div>
+
+  <div class="steps-container">
+      <div class="steps-text" >
+          <h1>WHAT <span style="color: coral"><strong>GIFTBOX</strong></span> CAN OFFER?</h1>
+          <p>Let us introduce what our AI can do for you!</p>
+          <figure >
+              <img src="{% static 'images/icon2.png' %}" style="height: 200px;width: 150px; ">
+              <h2>Give a gift</h2>
+              <figcaption>Discover what to buy as a gift<br> to share it with your family or friends. </figcaption>
+          </figure>
+          <figure >
+              <img  src="{% static 'images/icon1.png' %}" style="height: 200px;width: 150px">
+              <h2>Answer the questions</h2>
+              <figcaption>Let AI to create a very personalized giftbox sets for you<br> based on answers of questionnaire>  </figcaption>
+          </figure>
+          <figure>
+              <img src="{% static 'images/icon3.png' %}" style="height: 200px;width: 200px">
+              <h2>Answer the questions</h2>
+              <figcaption>Let AI to create a very personalized giftbox sets for you<br> based on answers of questionnaire>  </figcaption>
+          </figure>
+          <figure>
+              <img src="{% static 'images/icon4.png' %}" style="height: 200px;width: 150px">
+              <h2>Answer the questions</h2>
+              <figcaption>Let AI to create a very personalized giftbox sets for you<br> based on answers of questionnaire>  </figcaption>
+          </figure>
+
+
+      </div>
+  </div>
+
+   <div class="banner2 banner-slide-2">
+      <div class="banner2-container">
+          <div class="app-text">
+              <h1><strong>GIFTBOX <br><br>Can Solve All Of<br> Your Problems</strong></h1>
+
+          </div>
+      </div>
+  </div>
+
+{% endblock content %}
+
