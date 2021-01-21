@@ -270,7 +270,7 @@ body .fc-widget-header a {
 }
 .friend-list > li {
     float: left;
-    width: 50%;
+    width: 25%;
 }
 .friend-list > li > a {
     display: block;
@@ -301,6 +301,7 @@ body .fc-widget-header a {
     font-size: 0.875rem;
     font-weight: 600;
 }
+
 .friend-list .friend-info p {
     color: #666;
     margin: 0;

@@ -1,0 +1,39 @@
+{% extends 'home/home.html' %}
+{% load static %}
+{% block content %}
+    <div class=" my-4" >
+	  <h3 class="text-black-50 my-4 mx-5">Favourite Posts</h3>
+	  <div class="d-flex justify-content-evenly">
+          {% for post in new %}
+		  <div class="card " style="width: 18rem;height: auto;">
+			  <div class="d-flex">
+
+				  <img class="card-img-top favorite-list-img" src="{{ post.postpic.url }}"
+                    style="height: 13rem;">
+			  </div>
+			  <div class="card-body favorite-card-body container-fluid">
+				  <h5 class="card-title">{{ post.title|truncatechars:50 }}</h5>
+				  <div class="pname">
+                      <p class="card-text container-fluid" style="margin: auto -0.5em;">{{ post.content|truncatechars:50 }}</p>
+                  </div>
+                  <div class="product-author-publisher" style="margin: 30px auto;">
+                      <h9 class="product-author" style="font-weight: 400; font-style: italic">
+                          {{ post.created_by|truncatechars:30  }}</h9>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center">
+                      <div id="favourite-section" class="container-fluid">
+                          <a href="{% url 'remove_favorites' post.id %}"
+                             class="btn btn-outline-primary remove-from-favorites">Remove</a>
+                          <a class="btn btn-outline-success view-product-detail"
+                             href="{% url 'post_details' post.id %}">View</a></div>
+                  </div>
+			  </div>
+		  </div>
+          {% endfor %}
+	  </div>
+
+  </div>
+
+
+
+{% endblock content %}

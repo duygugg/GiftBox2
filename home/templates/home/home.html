@@ -15,48 +15,53 @@
 			rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
   </head>
   <body>
-   <nav class="navbar navbar-expand-lg navbar-dark bg-white">
+   <nav class="navbar navbar-expand-lg navbar-light bg-white">
        <a class="logo" class="navbar-brand" href={% url 'home' %}><img src="{% static 'images/logo2.png' %}" style="height: 64px; width: 150px"></a>
-      <button class="navbar-toggler" type="button" ddata-toggle="collapse" data-target=".navbar-collapse">
-        <span class="navbar-toggler-icon" href=""></span>
 
-      </button>
+       <button class="navbar-toggler" type="button" data-toggle="collapse"
+               data-target="#navbarSupportedContent"
+               aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+           <span class="navbar-toggler-icon"></span>
+       </button>
 
-      <div class="navbar-collapse collapse " >
-        <ul class="navbar-nav navbar-center ">
-          <li class="nav-item"><a class="nav-link active" href="{% url 'whatsInside' %}" >WHAT'S INSIDE </a></li>
-            <li class="nav-item"><a class="nav-link " href="{% url 'givegift' %}" >GIVE A GIFT</a></li>
-            <li class="nav-item"><a class="nav-link " href="{% url 'contact' %}" >ABOUT US</a></li>
+
+      <div class="collapse navbar-collapse"  id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto " style="margin: auto !important;">
+            <li class="nav-item "><a class="nav-link" href="{% url 'whatsInside' %}" >WHAT'S INSIDE<span
+                    class="sr-only">(current)</span> </a></li>
+            <li class="nav-item"><a class="nav-link " href="{% url 'givegift' %}" >GIVE A GIFT<span
+                    class="sr-only">(current)</span></a></li>
+            <li class="nav-item"><a class="nav-link " href="{% url 'contact' %}" >ABOUT US<span
+                    class="sr-only">(current)</span></a></li>
         </ul>
-      </div>
+          <div class="form-inline my-2 my-sm-2" >
 
 
-              <div class="navbar-nav navbar-right">
+              <ul class="navbar-nav profile-menu-drop-down">
                   {% if request.user.is_authenticated %}
-
-                  <div class="dropdown">
-                      <a href="#" class="btn btn-light dropdown-toggle"
-                      role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                         aria-haspopup="true" aria-expanded="false">
-                          <i class="far fa-user" style="margin-right: 1em;"></i>Hello, {{ request.user.customer.name }} !
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                             role="button"
+                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="far fa-user" style="margin-right: 1em;"></i>Hello, {{ request.user.customer.name }} !
+                          </a>
+                          <div class="dropdown-menu custom-dropdown" style="z-index: 2222222;" aria-labelledby="navbarDropdownMenuLink">
+                              <a class="dropdown-item" href="{% url 'myprofile' %}">My Profile</a>
+                              <a class="dropdown-item" href="{% url 'order-detail' %}">My Orders</a>
+                              <a class="dropdown-item" href="{% url 'blog' %}">Blog</a>
+                              <a href="{% url 'logout' %}" id="logout" class="btn btn-warning dropdown-item">Logout</a>
+                          </div>
+                      </li>
+                      <a href="#" class="nav-link" data-toggle="modal" data-target="#myModal">
+                          <i class="fas fa-shopping-cart"></i>
                       </a>
-                      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                          <a class="dropdown-item" href="{% url 'myprofile' %}">My Profile</a>
-                          <a class="dropdown-item" href="{% url 'order-detail' %}">My Orders</a>
-                          <a class="dropdown-item" href="{% url 'blog' %}">Blog</a>
-                          <a href="{% url 'logout' %}" id="logout" class="btn btn-warning dropdown-item">Logout</a>
-                      </div>
-                  </div>
                   {% else %}
                       <a href="{% url 'login' %}" class="nav-link "><i class="fas fa-user"></i></a>
-
                   {% endif %}
-                  <a href="#" class="nav-link "><i class="fas fa-search"></i></a>
-                  <a href="#" class="nav-link" data-toggle="modal" data-target="#myModal"><i class="fas fa-shopping-cart"></i></a>
-              </div>
-
+              </ul>
+          </div>
+      </div>
    </nav>
-
 
 
 <div class="container-fluid">
@@ -129,28 +134,19 @@
 
 <div id="myModal" class="modal fade" role="dialog">
     <div class="row">
-        <div class="container d-flex justify-content-end" style="margin-top: 100px;">
-            <div class="col-sm-5">
+        <div class="container d-flex justify-content-end" style="margin-top: 80px;">
+            <div class="col-sm-3">
                 <div class="text-end mt-30"><a href="{% url 'home' %}" id="close-modal">X</a></div>
-                <div class="card text-center" style="width: 60%;height:200px;background-color: whitesmoke;">
+                <div class="card text-center" style="width: 60%;height:100px;background-color: whitesmoke;">
 
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-sm-6 mb-2 mb-md-0">
-                                <p> 1 item(s)</p>
-                            </div>
-                            <div class="col-sm-6">
-                                <p>Subtotal</p>
-                            </div>
+                            <a style="width: 85%;margin:1.2em auto;" href="{% url 'cart' %}" class="btn btn-out btn-success
+                            btn-square btn-sm " style="width: 80%;"><i class="fas fa-shopping-cart"></i> View Chart</a>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-4 mb-2 mb-md-0"> <a href="{% url 'checkout' %}" class="btn btn-out
-                            btn-success btn-square btn-block"> <i class="fas fa-money-check"></i> Checkout</a> </div>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-4 " > <a href="{% url 'cart' %}" class="btn btn-out btn-success
-                            btn-square btn-block"><i class="fas fa-shopping-cart"></i> View Chart</a> </div>
-                        </div>
+
+
                     </div>
 
                     </div>

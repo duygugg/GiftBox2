@@ -111,78 +111,85 @@
 		  }
       </style>
 
-
+{% for msg in users %}
+ {% if user is msg.sender %}
+  sent to {{ msg.receiver }} : {{ the_message }}
+ {% else %}
+  sent by {{ msg.sender }} : {{ the_message }}
+ {% endif %}
+{% endfor %}
   <div class="container content my-4">
 	  <div class="row">
 		  <div class="col-4 mx-auto">
-			  <div class="card" style="height: 200px;width: 300px;">
+			  <div class="card" style="height: auto;width: 300px;">
 				  <div class="card-header bg-light text-black-50">Chat</div>
 				  <div class="card-body height3">
 					  <ul class="chat-list">
-						  <li class="in rounded" style="margin-bottom: -10px">
-							  <h4 class="bg-light border-top text-black-50 py-3"><i class="fas fa-user text-black-50 mx-4"></i>Jimmy Williams</h4>
+						  {% for friend in friends %}
+                              <li class="in chat-source">
+                                  <h4 class=" border-top text-black-50 py-3">
+                                      {% if friend.friend.username == user.username %}
+                                      <a href="{% url 'messages' friend.user.id %}" style="display: inline-block;">
+                                          <i class="fas fa-user text-black-50 mx-4"></i>
+                                      </a>
+                                          <label>{{ friend.user.username }}</label>
+                                      {% else %}
+                                          <a href="{% url 'messages' friend.friend.id %}" style="display: inline-block;">
+                                              <i class="fas fa-user text-black-50 mx-4"></i>
+                                          </a>
+                                          <label>{{ friend.friend.username }}</label>
+                                      {% endif %}
+
+                                  </h4>
+
+
 						  </li>
-						  <li class="in chat-source">
-							  <h4 class=" border-top text-black-50 py-3"><i class="fas fa-user text-black-50 mx-4"></i>Jimmy Williams</h4>
-						  </li>
+                          {% endfor %}
 					  </ul>
 				  </div>
 			  </div>
 		  </div>
 		  <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-12">
-			  <div class="card" style="height: 400px;">
-				  <div class="card-header bg-light text-black-50">Jimmy Williams</div>
+			  <div class="card" style="height: auto;width: 600px;">
+                  <div class="card-header bg-light text-black-50">{{ friend_name}}</div>
+
 				  <div class="card-body height3">
 					  <ul class="chat-list">
+                          {% for message in messages %}
+                              {% if message.sender.id != request.user.id %}
 						  <li class="in">
 							  <div class="chat-img">
-
 							  </div>
 							  <div class="chat-body">
 								  <div class="chat-message bg-secondary">
-									  <h5>Jimmy Willams</h5>
-									  <p>Raw denim heard of them tofu master cleanse</p>
+									  <h5>{{ message.sender.username }}</h5>
+									  <p>{{ message.content }}</p>
 								  </div>
 							  </div>
 						  </li>
+                              {% else %}
 						  <li class="out">
 							  <div class="chat-img">
-
 							  </div>
 							  <div class="chat-body">
 								  <div class="chat-message">
-									  <h5>Serena</h5>
-									  <p>Next level veard</p>
+									  <h5>{{ request.user.username }}</h5>
+									  <p>{{ message.content }}</p>
 								  </div>
 							  </div>
 						  </li>
-						  <li class="in">
-							  <div class="chat-img">
+                              {% endif %}
+                          {% endfor %}
 
-							  </div>
-							  <div class="chat-body">
-								  <div class="chat-message bg-secondary">
-									  <h5 class="name">Jimmy Willams</h5>
-									  <p>Will stumptown scenes coffee viral.</p>
-								  </div>
-							  </div>
-						  </li>
-						  <li class="out">
-							  <div class="chat-img">
-
-							  </div>
-							  <div class="chat-body">
-								  <div class="chat-message">
-									  <h5>Serena</h5>
-									  <p>Tofu master best deal</p>
-								  </div>
-							  </div>
-						  </li>
 					  </ul>
-					  <div class="d-flex">
-						  <input class=" form-control" type="text">
-						  <button class="mx-2 btn btn-light text-white  " style="background-color: coral">Send</button>
-					  </div>
+                      <form method="POST" action="{% url 'messages' friend_id %}">
+                          <div class="d-flex">
+                              {% csrf_token %}
+                              <input name="msg" class=" form-control" type="text">
+                              <button class="mx-2 btn btn-light text-white  " style="background-color: coral">Send</button>
+                          </div>
+                      </form>
+
 				  </div>
 			  </div>
 		  </div>

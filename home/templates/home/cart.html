@@ -1,55 +1,80 @@
 {% extends 'home/home.html' %}
 {% load static %}
 {% block content %}
-<div class="row">
-    <div class="col-lg-12">
-        <div class="box-element" style="width: 80%;justify-content: center;margin: auto;">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box-element" style="width: 80%;justify-content: center;margin: auto;">
 
-            <a class="btn btn-outline-dark" href="{% url 'home' %}">&#x2190; Go back Main Page</a>
+                <a class="btn btn-outline-dark" href="{% url 'home' %}">&#x2190; Go back Main Page</a>
 
-            <br>
-            <br>
-            <table class="table">
-                <tr>
-                    <th><h5>Items: <strong>{{order.get_cart_items}}</strong></h5></th>
-                    <th><h5>Total:<strong>{{order.get_cart_total}} TL</strong></h5></th>
-                    <th>
-                        <a style="float:right; margin:5px;" class="btn btn-success"
-                           href="{% url 'checkout' %}">Checkout</a>
-                    </th>
-                </tr>
+                <br>
+                <br>
+                <table class="table">
+                    <tr>
+                        <th><h5 id="items">Items: <strong></strong></h5></th>
+                        <th><h5 id="total">Total:<strong></strong></h5></th>
+                        <th>
+                            <button style="float:right; margin:5px;" class="btn btn-success" type="submit" form="table">
+                                Checkout
+                            </button>
+                        </th>
+                    </tr>
 
-            </table>
-            <hr>
-        </div>
-
-        <br>
-        <div class="box-element" style="width: 80%; justify-content: center;margin: 0 auto 60px;">
-            <div class="cart-row">
-                <div style="flex:2"></div>
-                <div style="flex:2"><strong>Item</strong></div>
-                <div style="flex:1"><strong>Price</strong></div>
-                <div style="flex:1"><strong>Quantity</strong></div>
-                <div style="flex:1"><strong>Total</strong></div>
+                </table>
+                <hr>
             </div>
 
-             {#% for item in items %#}
-            <div class="cart-row">
-                <div style="flex:2"><img class="row-image" src="{{item.product.imageURL}}"></div>
-                <div style="flex:2"><p>{{item.product.name}}</p></div>
-                <div style="flex:1"><p>{{item.product.price|floatformat:2}} TL</p></div>
-                <div style="flex:1">
-                    <p class="quantity">{{item.quantity}}</p>
-                    <div class="quantity">
-                        <img data-product ="{{ item.product.id }}" data-action="add" class="chg-quantity update-cart" src="{% static  'images/arrow-up.png' %}">
-
-                        <img data-product ="{{ item.product.id }}" data-action="remove" class="chg-quantity update-cart" src="{% static  'images/arrow-down.png' %}">
-                    </div>
+            <br>
+            <div class="box-element" style="width: 80%; justify-content: center;margin: 0 auto 60px;">
+                <div class="cart-row">
+                    <div style="flex:2"></div>
+                    <div style="flex:2"><strong>Item</strong></div>
+                    <div style="flex:1"><strong>Price</strong></div>
+                    <div style="flex:1"><strong>Quantity</strong></div>
+                    <div style="flex:1"><strong>Total</strong></div>
                 </div>
-                <div style="flex:1"><p>{{item.get_total}} TL</p></div>
+                <form action="{% url 'cart' %}" method="post" id="table">
+                    {% csrf_token %}
+                    {% for product in products %}
+                        <div class="cart-row">
+                            <div style="flex:2"><img class="row-image" src="{{ product.image.url }}"></div>
+                            <div style="flex:2"><p>{{ product.name }}</p></div>
+                            <div style="flex:1" id="price_{{ product.id }}"><p>{{ product.price|floatformat:2 }} TL</p></div>
+                            <div style="flex:1">
+                                <input type="hidden" name="id" value="{{ product.id }}">
+                                <input type="number" min="0" class="form-control" style="width: 4em"
+                                       name="quantity" value="0" id="{{ product.id }}">
+                            </div>
+                            <div style="flex:1"><p id="value_{{ product.id }}">0 TL</p></div>
+                        </div>
+                    {% endfor %}
+                    <input type="hidden" value="{{ products|length }}" name="total_items">
+                </form>
             </div>
-            {#% endfor %#}
         </div>
     </div>
-</div>
+
+    <script>
+        document.querySelectorAll('[name=quantity]').forEach(function (element) {
+            element.addEventListener('change', function (e) {
+                let quantity = 0;
+                let price = 0;
+                document.querySelectorAll('[name=quantity]').forEach(function (element) {
+                    if (element.id !== e.currentTarget.id) {
+                        quantity += parseInt(element.value)
+                        price += (parseInt(document.getElementById('price_'+ element.id).innerText.split(" ")[0]) * parseInt(element.value))
+                    }
+                })
+
+                let itemPrice = (parseInt(document.getElementById('price_'+ e.currentTarget.id).innerText.split(" ")[0]) * parseInt(e.currentTarget.value));
+                quantity += parseInt(e.currentTarget.value)
+                price += itemPrice
+
+                document.getElementById('value_'+e.currentTarget.id).innerText = itemPrice + ' TL'
+
+                document.getElementById('items').innerText = 'Items : ' + quantity
+                document.getElementById('total').innerText = 'Total : ' + price
+            })
+        })
+    </script>
 {% endblock content %}

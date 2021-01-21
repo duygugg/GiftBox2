@@ -4,15 +4,24 @@ from django.contrib import admin
 from .models import *
 admin.site.register(Order)
 admin.site.register(OrderItem)
-admin.site.register(Category)
+
+admin.site.register(Blog_Category)
 admin.site.register(DeliveryInfo)
 admin.site.register(Answer)
+admin.site.register(FriendshipRequest)
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'id')
+
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'price', 'created_on')
     list_filter = ('created_on',)
     search_fields = ['name']
 
+@admin.register(Chat_Messages)
+class MessagesAdmin(admin.ModelAdmin):
+    list_display = ('sender', 'receiver', 'content','created_at','unread')
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
     list_display = ('name', 'surname', 'email')
@@ -30,25 +39,19 @@ class postAdmin(admin.ModelAdmin):
     search_fields = ('created_by', 'content')
 
 
-class FriendsListAdmin(admin.ModelAdmin):
-
-    list_display = ['__str__']
-
-    class Meta:
-        model = Friendship
-
-admin.site.register(Friendship, FriendsListAdmin)
-
 @admin.register(Questionnaire)
 class QuestionnaireAdmin(admin.ModelAdmin):
     list_display = ('questionnaire_name', 'questions_count',)
+
+
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
     list_display = ['question_text']
 
+
 @admin.register(QuestionnaireResults)
 class QuestionnaireResultsAdmin(admin.ModelAdmin):
-    list_display = ('user','completed')
+    list_display = ('user', 'completed')
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):

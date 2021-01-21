@@ -1,0 +1,61 @@
+{% extends 'home/home.html' %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
+
+
+
+    <div class="container">
+        <div class="row">
+            <!-- Latest Posts -->
+            <main class="post blog-post col-lg-8">
+                <div class="container">
+                    <div class="post-single">
+                        <div class="post-thumbnail"><img src="{{ post.postpic.url }}" alt="..."
+                                                         class="img-fluid"></div>
+                        <div class="post-details">
+                            <div class="post-meta d-flex justify-content-between">
+                                <div class="category">
+
+                                    <a href="#">{{ cat }}</a>
+
+                                </div>
+                                <div>
+                                    <a href="#">Delete</a>
+                                </div>
+                            </div>
+                            <form action="" method="post">
+
+                            {% csrf_token %}
+
+                            <h1>
+                                <input type="text" value="{{ post.title }}" name="title" id="id_title" class="border border-light shadow-sm container-fluid">
+                                <a href="#"><i class="fa fa-bookmark-o"></i></a>
+                            </h1>
+                            <div class="post-footer d-flex align-items-center flex-column flex-sm-row"><a href="#" class="author d-flex align-items-center flex-wrap">
+                                <div class="avatar"><img src="{{ post.created_by.customer.profile_pic.url }}" alt="..."
+                                                         class="img-fluid"></div>
+                                <div class="title"><span>{{ post.created_by.username }}</span></div>
+                            </a>
+                                <div class="d-flex align-items-center flex-wrap">
+                                    <div class="date"><i class="icon-clock"></i>{{ post.created_at|date:'Y-m-d H:i' }}</div>
+                                    <div class="views"><i class="icon-eye"></i> {{ post.number_of_likes }}</div>
+                                    <div class="comments meta-last"><i class="icon-comment"></i>{{ post.comments.count }}</div>
+                                </div>
+                            </div>
+                            <div class="post-body">
+
+                                <textarea class="container-fluid" name="content" id="id_content" cols="100" rows="10">{{ post.content }}</textarea>
+
+                            </div>
+                                <button type="submit" class="btn btn-info">Save</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            {% include 'home/sidebar.html' with most_recent=most_recent category_count=category_count %}
+        </div>
+    </div>
+{% endblock content %}

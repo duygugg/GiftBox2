@@ -1,7 +1,7 @@
 {% extends 'home/home.html' %}
 {% load static %}
 {% block content %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}" xmlns="http://www.w3.org/1999/html">
     <div class="container">
         <div class="row">
             <!-- Latest Posts -->
@@ -43,42 +43,41 @@
                             </div>
                         {% endfor %}
                     </div>
-
-                    <!-- Pagination -->
-                 <!-- Pagination -->
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination pagination-template d-flex justify-content-center">
-                            {% if posts.has_previous %}
-                                <li class="page-item"><a href="?{{ page_request_var }}={{ posts.previous_page_number }}" class="page-link"> <i class="fa fa-angle-left"></i></a></li>
-                            {% endif %}
-                            <li class="page-item"><a href="?{{ page_request_var }}={{ posts.number }}" class="page-link active">{{ posts.number }}</a></li>
-                            {% if posts.has_next %}
-                                <li class="page-item"><a href="?{{ page_request_var }}={{ posts.next_page_number }}" class="page-link"> <i class="fa fa-angle-right"></i></a></li>
-                            {% endif %}
-                        </ul>
-                    </nav>
-                    {% if is_paginated %}
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination pagination-template d-flex justify-content-center">
-                                {% if page_obj.has_previous %}
-                                    <li class="page-item"><a
-                                            href="?{{ page_request_var }}={{ page_obj.previous_page_number }}"
-                                            class="page-link"> <i class="fa fa-angle-left"></i></a></li>
-                                {% endif %}
-                                <li class="page-item"><a href="?{{ page_request_var }}={{ page_obj.number }}"
-                                                         class="page-link active">{{ page_obj.number }}</a></li>
-                                {% if page_obj.has_next %}
-                                    <li class="page-item"><a
-                                            href="?{{ page_request_var }}={{ page_obj.next_page_number }}"
-                                            class="page-link"> <i class="fa fa-angle-right"></i></a></li>
-                                {% endif %}
-                            </ul>
-                        </nav>
-                    {% endif %}
                 </div>
             </main>
-            {% include 'home/sidebar.html' with most_recent=most_recent category_count=category_count %}
+        <aside class="col-lg-4">
+             <div class="widget latest-posts">
+                 <header>
+                     <h3 class="h6">Latest Posts</h3>
+                 </header>
+                 <div class="blog-posts">
+                     {% for post in most_recent %}
+                         <a href="{{ post.get_absolute_url }}">
+                             <div class="item d-flex align-items-center">
+                                 <div class="image"><img src="{{ post.postpic.url }}" alt="..." class="img-fluid"></div>
+                                 <div class="title"><strong>{{ post.title }}</strong>
+                                     <div class="d-flex align-items-center">
+                                         <div class="views"><i class="icon-eye"></i> {{ post.view_count }}</div>
+                                         <div class="comments"><i class="icon-comment"></i>{{ post.comments.count }}</div>
+                                     </div>
+                                 </div>
+                             </div>
+                         </a>
+                     {% endfor %}
 
+                 </div>
+    <!-- Widget [Categories Widget]-->
+                 <div class="widget categories">
+                     <header>
+                         <h3 class="h6">Categories</h3>
+                     </header>
+                     {% for category in category_count %}
+                         <div class="item d-flex justify-content-between">
+                             <a href="#">{{ category.title}}</a><span>{{ category.post_set.count}}</span>
+                         </div>
+                     {% endfor %}
+                 </div>
+        </aside>
         </div>
     </div>
 

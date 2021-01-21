@@ -4,13 +4,13 @@ import datetime
 import self as self
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.shortcuts import render, redirect
 
-from home.models import Customer, User, Product, Order, OrderItem, DeliveryInfo
-#from home.utils import cartData
+from home.models import Customer, User, Product, Order, OrderItem, DeliveryInfo,  FriendshipRequest,Post
 from .forms import RegistrationForm, CustomerForm, AddressForm
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
@@ -94,15 +94,24 @@ def change_password(request):
         form = PasswordChangeForm(request.user)
     return render(request, 'user/change_password.html', {'form': form})
 
+@login_required(login_url='/login')
+def show_profile(request, user_id):
+    if request.user.id == user_id:
+        return render(request, 'user/profile.html')
+    user = User.objects.get(id=user_id)
+
+    return render(request, 'user/profile.html', {'user': user})
+
+
+
 def addresses(request):
-    customer = request.user.customer
-    form = AddressForm(instance=customer)
+    customer = request.user.id
+    address = DeliveryInfo.objects.filter(belongs_to__id=customer).first()
+    form = AddressForm(instance=address)
     if request.method == 'POST':
-        messages.success(request,customer)
-        form = AddressForm(request.POST, instance=customer,)
+        form = AddressForm(request.POST, instance=address, )
         if form.is_valid():
-            user=form.save()
-            update_session_auth_hash(request, user)
+            form.save()
             messages.success(request, 'Changes are successfully updated!')
         else:
             messages.error(request, 'Please correct the error below.')
@@ -111,5 +120,23 @@ def addresses(request):
     return render(request, 'user/addresses.html', context)
 
 
+def add_friend(request, user_id):
+    if user_id not in FriendshipRequest.objects.filter(user_id=request.user.id).values_list('friend_id',
+                                                                                            flat=True).distinct() and \
+            FriendshipRequest.objects.filter(user_id=user_id).values_list('friend_id', flat=True).distinct():
+        FriendshipRequest.objects.create(user_id=request.user.id, friend_id=user_id)
+
+    return redirect('/user/profile/' + str(user_id))
 
 
+def accept_friend(request, user_id):
+    friendship = FriendshipRequest.objects.get(user_id=user_id, friend_id=request.user.id,confirmed=2)
+
+    friendship.confirmed = 3
+    friendship.save()
+
+    return redirect('/friends/')
+
+def favorite_list(request):
+    new = Post.objects.filter(likes=request.user)
+    return render(request, 'user/favorites.html', {'new': new})

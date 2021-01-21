@@ -2,137 +2,125 @@
 {% load static %}
 {% block content %}
     <div class="px-3">
-                <button type="button" class="btn btn-light bg-white text-black-50">
-                    <i class="fas fa-arrow-left text-black-50"></i>
-                    <a href="{% url 'giftcart-display' %}" style="text-decoration: none;color: #8f9296">Go Back</a>
-                </button>
-            </div>
-     <div class="wrapper">
-            <div class="heading">
-                <h1>Start exploring the <strong style="color: coral">GiftBox </strong></h1>
-                <p>Start preparing a Gift for yourself or beloved ones!</p>
+        <button type="button" class="btn btn-light bg-white text-black-50">
+            <i class="fas fa-arrow-left text-black-50"></i>
+            <a href="{% url 'giftcart-display' %}" style="text-decoration: none;color: #8f9296">Go Back</a>
+        </button>
+    </div>
+    <div class="wrapper">
+        <div class="heading">
+            <h1>Start exploring the <strong style="color: coral">GiftBox </strong></h1>
+            <p>Start preparing a Gift for yourself or beloved ones!</p>
 
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="box-element" id="form-wrapper">
-                <form id="form">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="box-element" id="form-wrapper">
+                        <form id="form" method="post" action="{% url 'checkout' order.id %}">
+                            {% csrf_token %}
+                            <div id="user-info">
+                                <div class="form-field">
+                                    <input required class="form-control" type="text" name="name" placeholder="Name..">
+                                </div>
+                                <div class="form-field">
+                                    <input required class="form-control" type="text" name="surname"
+                                           placeholder="Surname..">
+                                </div>
+                                <div class="form-field">
+                                    <input required class="form-control" type="email" name="email" placeholder="Email.."
+                                           value="{{ request.user.email }}">
+                                </div>
+                            </div>
 
-                    <div id="user-info">
-                        <div class="form-field">
-                            <input required class="form-control" type="text" name="name" placeholder="Name..">
-                        </div>
-                        <div class="form-field">
-                            <input required class="form-control" type="text" name="surname" placeholder="Surname..">
-                        </div>
-                        <div class="form-field">
-                            <input required class="form-control" type="email" name="email" placeholder="Email..">
-                        </div>
-                    </div>
-
-                    <div id="shipping-info">
-                        <hr>
-                        <p style="margin: auto;color:coral;font-weight:bolder;
+                            <div id="shipping-info">
+                                <hr>
+                                <p style="margin: auto;color:coral;font-weight:bolder;
                         font-family: 'Nunito', sans-serif;">Shipping Information:</p>
-                        <hr>
-                        <div class="form-field">
-                            <input class="form-control" type="text" name="address" placeholder="Address..">
-                        </div>
-                        <div class="form-field">
-                            <input class="form-control" type="text" name="city" placeholder="City..">
-                        </div>
-                        <div class="form-field">
-                            <input class="form-control" type="text" name="state" placeholder="State..">
-                        </div>
-                        <div class="form-field">
-                            <input class="form-control" type="text" name="zipcode" placeholder="Zip code..">
-                        </div>
-                        <div class="form-field">
-                            <input class="form-control" type="text" name="country" placeholder="Zip code..">
-                        </div>
-                    </div>
+                                <hr>
+                                <div class="form-field">
+                                    <input class="form-control" type="text" name="address" placeholder="Address..">
+                                </div>
+                                <div class="form-field">
+                                    <input class="form-control" type="text" name="city" placeholder="City..">
+                                </div>
+                                <div class="form-field">
+                                    <input class="form-control" type="text" name="state" placeholder="State..">
+                                </div>
+                                <div class="form-field">
+                                    <input class="form-control" type="text" name="zipcode" placeholder="Zip code..">
+                                </div>
+                                <div class="form-field">
+                                    <input class="form-control" type="text" name="country" placeholder="Zip code..">
+                                </div>
+                            </div>
 
-                    <div class="box-element" id="payment-info" style="margin:50px auto;">
-                        <hr>
-                        <p style="margin: auto;color: coral;font-weight:bolder;
+                            <div class="box-element" id="payment-info" style="margin:50px auto;">
+
+                                <hr>
+                                <p style="margin: auto;color: coral;font-weight:bolder;
                         font-family: 'Nunito', sans-serif;">Payment Information:</p>
+                                <hr>
+                                <!--Card content-->
+                                <div class="form-field">
+                                    <label for="cc-name">Name on card</label>
+                                    <input type="text" class="form-control" id="cc-name" placeholder=""
+                                           name="name_on_card"
+                                           required>
+                                </div>
+
+                                <div class="form-field">
+                                    <label for="cc-number">Credit card number</label>
+                                    <input type="text" class="form-control" id="cc-number" placeholder=""
+                                           name="credit_card_number"
+                                           required>
+                                </div>
+                                <div class="form-field">
+                                    <label for="cc-expiration">Expiration</label>
+                                    <input type="text" class="form-control" id="cc-expiration" placeholder="MM/YY"
+                                           name="expiration"
+                                           required>
+                                </div>
+                                <div class="form-field">
+                                    <label for="cc-expiration">CVV</label>
+                                    <input type="text" class="form-control" id="cc-cvv" placeholder="" name="ccv"
+                                           required>
+                                </div>
+                                <button id="make-payment" class="btn btn-success btn-lg btn-block"
+                                        style="margin:20px auto 20px;" href="{% url 'orders' order.id %}">Make Payment
+                                </button>
+
+                            </div>
+
+                            <hr>
+
+                        </form>
+                    </div>
+
+                    <br>
+
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="box-element">
+                        <a class="btn btn-outline-dark" href="#">&#x2190; Back to Cart</a>
                         <hr>
-                        <!--Card content-->
-                        <div class="form-field">
-                            <label for="cc-name">Name on card</label>
-                            <input type="text" class="form-control" id="cc-name" placeholder="" name="name_on_card"
-                                   required>
-                        </div>
+                        <h3>Order Summary</h3>
+                        {% for order_item in order_items %}
+                            <hr>
+                            <div class="cart-row">
+                                <div style="flex:2"><img class="row-image" src="{{ order_item.product_id.image.url }}">
+                                </div>
+                                <div style="flex:2"><p>{{ order_item.product_id.name }}</p></div>
+                                <div style="flex:1"><p>{{ order_item.product_id.price|floatformat:2 }} $</p></div>
+                                <div style="flex:1"><p>{{ order_item.quantity }}x</p></div>
+                            </div>
+                        {% endfor %}
 
-                        <div class="form-field">
-                            <label for="cc-number">Credit card number</label>
-                            <input type="text" class="form-control" id="cc-number" placeholder=""
-                                   name="credit_card_number"
-                                   required>
-                        </div>
-                        <div class="form-field">
-                            <label for="cc-expiration">Expiration</label>
-                            <input type="text" class="form-control" id="cc-expiration" placeholder="MM/YY"
-                                   name="expiration"
-                                   required>
-                        </div>
-                        <div class="form-field">
-                            <label for="cc-expiration">CVV</label>
-                            <input type="text" class="form-control" id="cc-cvv" placeholder="" name="ccv" required>
-                        </div>
-                        <button id="make-payment" class="btn btn-success btn-lg btn-block" style="margin:20px auto 20px;">Make Payment</button>
-
-
+                        <h5>Items: {{ order.total_items }}</h5>
+                        <h5>Total: {{ order.total_price|floatformat:2 }} $</h5>
                     </div>
-
-                    <hr>
-
-                </form>
-            </div>
-
-            <br>
-
-        </div>
-
-        <div class="col-lg-6">
-            <div class="box-element">
-                <a class="btn btn-outline-dark" href="#">&#x2190; Back to Cart</a>
-                <hr>
-                <h3>Order Summary</h3>
-                <hr>
-                    <div class="cart-row">
-                        <div style="flex:2"><img class="row-image" src="{% static 'images/product.png' %}"></div>
-                        <div style="flex:2"><p>Gift Product</p></div>
-                        <div style="flex:1"><p>{{ 55.45|floatformat:2 }} $</p></div>
-                        <div style="flex:1"><p>4x</p></div>
-                    </div>
-                <hr>
-                    <div class="cart-row">
-                        <div style="flex:2"><img class="row-image" src="{% static 'images/product.png' %}"></div>
-                        <div style="flex:2"><p>Gift Product</p></div>
-                        <div style="flex:1"><p>{{ 55.45|floatformat:2 }} $</p></div>
-                        <div style="flex:1"><p>4x</p></div>
-                    </div>
-                <hr>
-                    <div class="cart-row">
-                        <div style="flex:2"><img class="row-image" src="{% static 'images/product.png' %}"></div>
-                        <div style="flex:2"><p>Gift Product</p></div>
-                        <div style="flex:1"><p>{{ 55.45|floatformat:2 }} $</p></div>
-                        <div style="flex:1"><p>4x</p></div>
-                    </div>
-                <hr>
-                    <div class="cart-row">
-                        <div style="flex:2"><img class="row-image" src="{% static 'images/product.png' %}"></div>
-                        <div style="flex:2"><p>Gift Product</p></div>
-                        <div style="flex:1"><p>{{ 55.45|floatformat:2 }} $</p></div>
-                        <div style="flex:1"><p>4x</p></div>
-                    </div>
-
-                <h5>Items: 10</h5>
-                <h5>Total: {{ 5055|floatformat:2 }} $</h5>
+                </div>
             </div>
         </div>
     </div>
-</div>
-</div>
 
 {% endblock content %}

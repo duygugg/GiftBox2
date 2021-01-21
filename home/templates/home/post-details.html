@@ -1,111 +1,179 @@
 {% extends 'home/home.html' %}
 {% load static %}
+ <style>
+        i.fa.fa-thumbs-down {
+            display: none;
+        }
 
+        i.fa.fa-thumbs-up {
+            display: none;
+        }
+
+        svg.bi.bi-heart-fill {
+            margin-left: 5px;
+            width: 17px;
+            height: 17px;
+        }
+
+    </style>
+<script>
+function myFunction() {
+  var txt;
+  if (confirm("Do you want to delete!")) {
+   //go to your delete path
+  } else {
+  //don't do anything
+  }
+
+}
+</script>
 {% block content %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
-
-
+    <link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
 
     <div class="container">
-      <div class="row">
-        <!-- Latest Posts -->
-        <main class="post blog-post col-lg-8">
-          <div class="container">
-            <div class="post-single">
-              <div class="post-thumbnail"><img src="{% static 'images/blogimagetools.jpg' %}" alt="..." class="img-fluid"></div>
-              <div class="post-details">
-                <div class="post-meta d-flex justify-content-between">
-                  <div class="category">
+        <div class="row">
+            <!-- Latest Posts -->
+            <main class="post blog-post col-lg-8">
+                <div class="container">
+                    <div class="post-single">
+                        <div class="post-thumbnail"><img src="{{ post.postpic.url }}" alt="..."
+                                                         class="img-fluid"></div>
+                        <div class="post-details">
+                            <div class="post-meta d-flex justify-content-between">
+                                <div class="category">
 
-                    <a href="#">{{ cat }}</a>
+                                    <a href="#">{{ cat }}</a>
 
-                  </div>
-                  <div>
-                    <a href="#">Update</a>
-                    <a href="#">Delete</a>
-                  </div>
-                </div>
-                <h1>Post Title<a href="#"><i class="fa fa-bookmark-o"></i></a></h1>
-                <div class="post-footer d-flex align-items-center flex-column flex-sm-row"><a href="#" class="author d-flex align-items-center flex-wrap">
-                    <div class="avatar"><img src="{% static 'images/usericon.png' %}" alt="..." class="img-fluid"></div>
-                    <div class="title"><span>Sarah Marshall</span></div></a>
-                  <div class="d-flex align-items-center flex-wrap">
-                    <div class="date"><i class="icon-clock"></i> 2 ago</div>
-                    <div class="views"><i class="icon-eye"></i> 112</div>
-                    <div class="comments meta-last"><i class="icon-comment"></i>58</div>
-                  </div>
-                </div>
-                <div class="post-body">
-                  It is a long established fact that a reader will be distracted by the
-                    readable content of a page when looking at its layout. The point of using Lorem
-                    Ipsum is that it has a more-or-less normal distribution of letters, as opposed
-                    to using 'Content here, content here', making it look like readable English.
-                    Many desktop publishing packages and web page editors now use Lorem Ipsum as
-                    their default model text, and a search for 'lorem ipsum' will uncover many web
-                    sites still in their infancy. Various versions have evolved over the years,
-                    sometimes by accident, sometimes on purpose (injected humour and the like).
+                                </div>
+                                <div>
 
+                                    {% if request.user.id == post.created_by.id or request.user.username == 'duyguadmin' %}
+                                        <a href="{{ post.get_absolute_url }}/edit">Update</a>
 
-                </div>
+                                        <a href="{{ post.get_absolute_url }}/delete">Delete</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <h1>{{ post.title }}<a href="#"><i class="fa fa-bookmark-o"></i></a></h1>
+                            <div class="post-footer d-flex align-items-center flex-column flex-sm-row">
+                                <a href="#" class="author d-flex align-items-center flex-wrap">
+                                <div class="avatar"><img src="{{ user.customer.profile_pic.url }}" alt="..." class="img-fluid"></div>
+                                <div class="title"><span>{{ user.username }}</span></div>
+                            </a>
+                                <div class="d-flex align-items-center flex-wrap">
+                                    <div class="date"><i class="icon-clock"></i>{{ post.created_at|date:'Y-m-d H:i' }}</div>
+                                    <div class="views"><i class="icon-eye"></i> {{ total_likes }}</div>
+                                    <div class="comments meta-last"><i class="icon-comment"></i>{{ post.comments.count }}</div>
+                                </div>
+                            </div>
+                        <div class="add-cart-favorite" style="margin-top: 3em;">
+                            <form action="{% url 'favorite_product' post.id %}" method="post">
+                                {% csrf_token %}
+                                {% if user.is_authenticated %}
+                                    {% if is_liked %}
+                                <!--If user is logged in and if it did favorite this product before-->
+                                        <button type="submit" name="product_id" value="{{ post_id }}"
+                                        class="btn btn-danger btn-md">
+                                            Remove from Favorites<i onclick="FavoriteUp(this)" class="fa fa-thumbs-down"></i>
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-heart-fill"
+                                                 fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                            </svg>
+                                        </button>
+                                    {% else %}
+                                <!--If user is logged in and if it did not favorite this product before -->
+                                        <button type="submit" name="product_id" value="{{ post.id }}"
+                                        class="btn btn-primary btn-md">
+                                    Add to Favorites<i onclick="FavoriteDown(this)" class="fa fa-thumbs-up"></i>
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-heart-fill"
+                                                 fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                            </svg>
+                                        </button>
+                                    {% endif %}
 
-                <div class="post-comments">
-                  <header>
-                    <h3 class="h6">Post Comments<span class="no-of-comments">(58)</span></h3>
-                  </header>
-
-                  <div class="comment" style="margin-top: -100px;">
-                    <div class="comment-header d-flex justify-content-between">
-                      <div class="user d-flex align-items-center">
-                        <div class="image">
-                            <img src="{% static 'images/usericon.png' %}"  alt="..." class="img-fluid rounded-circle">
+                                {% else %}
+                            <!-- If user is not logged in then it does not see any favorite button -->
+                                {% endif %}
+                            </form>
                         </div>
-                        <div class="title" style="font-size: small;margin-top: 20px;"><strong>Sarah</strong><span class="date">2 mins ago</span></div>
-                      </div>
-                    </div>
-                    <div class="comment-body" style="margin-top: -30px;">
-                      <p>Praesent dapibus, neque id cursus faucibus, tortor neque egestas auguae, eu vulputate magna eros
-                          eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus.</p>
-                    </div>
-                  </div>
-                    <div class="comment" style="margin-top: -100px;">
-                    <div class="comment-header d-flex justify-content-between">
-                      <div class="user d-flex align-items-center">
-                        <div class="image">
-                            <img src="{% static 'images/usericon.png' %}"  alt="..." class="img-fluid rounded-circle">
+
+
+                            <div class="post-body">
+
+                                {{ post.content }}
+
+                            </div>
+
+                            <div class="post-comments">
+                                <header>
+                                    <h3 class="h6">Post Comments<span class="no-of-comments">{{ post.comments.count }}</span></h3>
+                                </header>
+
+                                {% for comment in comments %}
+                                    <div class="comment" style="margin-top: -100px;">
+                                        <div class="comment-header d-flex justify-content-between">
+                                            <div class="user d-flex align-items-center">
+                                                <div class="image">
+                                                    <img src="{% static 'images/usericon.png' %}" alt="..."
+                                                         class="img-fluid rounded-circle">
+                                                </div>
+                                                <div class="title" style="font-size: small;margin-top: 20px;"><strong>{{ comment.commenter }}</strong><span
+                                                        class="date">{{ comment.created_on|date:'Y-m-d H:i' }}</span></div>
+                                            </div>
+                                        </div>
+                                        <div class="comment-body" style="margin-top: -30px;">
+                                            <p>{{ comment.comment_content }}</p>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            {% if request.user.is_authenticated %}
+                                <div class="add-comment">
+                                    <form method="POST" action="" class="commenting-form">
+                                        {% csrf_token %}
+                                        <div class="row">
+                                            <label for="">Comment</label>
+                                            <div class="form-group col-md-6 bg-light">
+                                                {{ comment_form.comment_content }}
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <button type="submit" class="btn btn-success"
+                                                        style="border-radius: 25px!important;">Make Comment
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            {% else %}
+                                <a href="#" class="btn btn-primary">Login to comment</a>
+                            {% endif %}
                         </div>
-                        <div class="title" style="font-size: small;margin-top: 20px;"><strong>Sarah</strong><span class="date">2 mins ago</span></div>
-                      </div>
                     </div>
-                    <div class="comment-body" style="margin-top: -30px;">
-                      <p>Praesent dapibus, neque id cursus faucibus, tortor neque egestas auguae, eu vulputate magna eros
-                          eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus.</p>
-                    </div>
-                  </div>
-
                 </div>
-
-                {% if request.user.is_authenticated %}
-                <div class="add-comment">
-                  <form method="POST" action="." class="commenting-form">
-                    {% csrf_token %}
-                    <div class="row">
-                      <div class="form-group col-md-12">
-                        {{ form }}
-                      </div>
-                      <div class="form-group col-md-12">
-                        <button type="submit" class="btn btn-success" style="border-radius: 25px!important;">Make Comment</button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-                {% else %}
-                <a href="#" class="btn btn-primary">Login to comment</a>
-                {% endif %}
-              </div>
-            </div>
-          </div>
-        </main>
-        {% include 'home/sidebar.html' with most_recent=most_recent category_count=category_count %}
-      </div>
+            </main>
+            {% include 'home/sidebar.html' with most_recent=most_recent category_count=category_count %}
+        </div>
     </div>
+<
+</body>
+    <script>
+        $(document).ready(function () {
+            // MDB Lightbox Init
+            $(function () {
+                $("#mdb-lightbox-ui").load("mdb-addons/mdb-lightbox-ui.html");
+            });
+        });
+
+        function FavoriteDown(x) {
+            x.classList.toggle("fa-thumbs-down");
+        }
+
+        function FavoriteUp(x) {
+            x.classList.toggle("fa-thumbs-up");
+        }
+
+    </script>
+
 {% endblock content %}

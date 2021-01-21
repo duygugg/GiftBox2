@@ -1,43 +1,59 @@
-{%  extends 'home/home.html' %}
+{% extends 'home/home.html' %}
 {% load static %}
 
 {% block content %}
-<div class="px-3">
-    <button type="button" class="btn btn-light bg-white text-black-50">
-        <i class="fas fa-arrow-left text-black-50"></i>
-        <a href="{% url 'givegift' %}" style="text-decoration: none;color: #8f9296">Go Back</a>
-    </button>
-</div>
-<div class="wrapper">
-    <div class="heading">
-        <h1>Start exploring the <strong style="color: coral">GiftBox </strong></h1>
-        <p>Start preparing a Gift for yourself or beloved ones!</p>
+    <div class="px-3">
+        <button type="button" class="btn btn-light bg-white text-black-50">
+            <i class="fas fa-arrow-left text-black-50"></i>
+            <a href="{% url 'givegift' %}" style="text-decoration: none;color: #8f9296">Go Back</a>
+        </button>
     </div>
-<div class="card card-custom">
-        <div class="card-body card-body-custom">
-            <form action="#" method="POST">
-                <div class="form-group">
-                    {% for question in questions %}
-                    <div class="card-text custom-text">
-                        <label>{{ allquestionwithanswer.question.question_text }} </label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                        <label class="form-check-label" for="inlineRadio1">Choice 1</label>
-                    </div>
-                    {% endfor %}
-                </div>
-            </form>
-
+    <div class="wrapper">
+        <div class="heading">
+            <h1>Start exploring the <strong style="color: coral">GiftBox </strong></h1>
+            <p>Start preparing a Gift for yourself or beloved ones!</p>
         </div>
-    </div>
-    <div class="text-center">
-        <a class="btn btn-success btn-lg active" href="{% url 'giftcart-display' %}"
-           style="text-decoration: none;color: white;">NEXT</a>
-    </div>
+        <div class="card card-custom">
+            <div class="card-body card-body-custom">
+                <form action="/questions/christmas" method="POST" id="answers">
+                    {% csrf_token %}
+                    <div class="form-group" style="float:left; height:50px; width: 100%;">
+                        {% for question in questions %}
+                            <div class="card-text">
+                                <label>{{ question.question_text }} </label>
+                                <input type="hidden" value="{{ question.id }}" name="question">
+                            </div>
+
+                            <div class="card-text" style="margin-right: 1.5em;">
+
+                                {% csrf_token %}
+                                {% for field in answer_form %}
+                                    <div class="col-md-12">
+                                       <div class="col-sm-6" style="margin-top: 4em;">{{ field }}</div>
+                                    </div>
+                                {% endfor %}
 
 
-</div>
+
+                                <!--{#% for x,y in answer_form.fields.answer.choices %#}
+                                    {#  #}{ y }}
+                                    <input   type="radio"  value="{{ x }}" style="margin-right: 1.5em;"
+                                            {#% if answer_form.fields.answer.value == x %#} selected{#% endif %#}>
+                                {#% endfor %#}-->
+
+                            </div>
+                        {% endfor %}
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        <div class="text-center">
+            <button type="submit" form="answers" class="btn btn-success btn-lg active">Next</button>
+        </div>
+
+
+    </div>
 
 
 {% endblock content %}

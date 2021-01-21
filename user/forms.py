@@ -37,4 +37,4 @@ class AddressForm(ModelForm):
     class Meta:
         model = DeliveryInfo
         fields = '__all__'
-        exclude = ['belongs_to']
+        exclude = ('belongs_to','is_default','created_at')

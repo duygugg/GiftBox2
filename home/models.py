@@ -26,11 +26,12 @@ class Category(models.Model):
         return self.name
 
 
+
 class Product(models.Model):
     name = models.CharField(max_length=200, null=True)
     price = models.DecimalField(max_digits=7, decimal_places=2)
     categories = models.ManyToManyField(Category, blank=True)
-    tags = TaggableManager()
+    #tags = TaggableManager()
     #similars = models.ManyToManyField(Product)
     image = models.ImageField(blank=False)
     favorites = models.ManyToManyField(User, related_name='product_favorites', blank=True)
@@ -39,13 +40,15 @@ class Product(models.Model):
     objects = models.Manager()
 
 class Order(models.Model):
-    total_items = models.IntegerField(blank=False)
-    total_price = models.DecimalField(blank=False, max_digits=10, decimal_places=2)
+    total_items = models.DecimalField(blank=True,null=True,default=0, max_digits=10, decimal_places=2)
+    total_price = models.DecimalField(default=0, max_digits=10, decimal_places=2)
     belong_to = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=datetime.now, blank=False)
+    completed= models.BooleanField(default=False,blank=True)
 
 
 class OrderItem(models.Model):
+    order_id = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_items')
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.DecimalField(default=1, blank=False, max_digits=6, decimal_places=2)
     status = models.CharField(blank=False, default='Pending', max_length=64)
@@ -74,17 +77,24 @@ class DeliveryInfo(models.Model):
     created_at = models.DateTimeField(default=datetime.now, blank=False)
 
 
-class Messages(models.Model):
-    sender = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='sender')
-    receiver = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='receiver')
-    content = models.TextField(blank=False)
-    created_at = models.DateTimeField(default=datetime.now, blank=False)
 
 
+class Blog_Category(models.Model):
+    title = models.CharField(max_length=255,null=True)
+    def __str__(self):
+        return self.title
+
+class PostView(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey('Post', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username
 
 class Post(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=255, blank=False)
+    title = models.CharField(max_length=255, blank=False,null=True)
+    blog_categories = models.ManyToManyField(Blog_Category, blank=True)
     content = models.TextField(blank=False)
     created_at = models.DateTimeField(default=datetime.now, blank=False)
     likes = models.ManyToManyField(User, related_name='post_likes')
@@ -102,6 +112,12 @@ class Post(models.Model):
     @property
     def number_of_likes(self):
         return self.likes.all().count()
+    def get_absolute_url(self):
+        return "/blog/post/%i" % self.id
+
+    @property
+    def view_count(self):
+        return PostView.objects.filter(post=self).count()
 
 class Comment(models.Model):
     blogpost = models.ForeignKey(
@@ -117,7 +133,8 @@ class Comment(models.Model):
     def __str__(self):
         return str(self.commenter) + ', ' + self.blogpost.title[:40]
 
-class Friendship(models.Model):
+
+class FriendshipRequest(models.Model):
     NOT_CONFIRMED = 1
     PENDING = 2
     CONFIRMED = 3
@@ -128,34 +145,13 @@ class Friendship(models.Model):
         (CONFIRMED, 'Confirmed'),
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user")
-    friends = models.ManyToManyField(User, blank=True, related_name="friends")
+    friend = models.ForeignKey(User, on_delete=models.CASCADE, related_name="friends")
     confirmed = models.IntegerField(choices=STATUS_CHOICES,
-                                    default=NOT_CONFIRMED)
+                                    default=PENDING)
+
     def __str__(self):
         return self.user.username
 
-
-
-    def add_friend(self, account):
-        if not account in self.friends.all():
-            self.friends.add(account)
-            self.save()
-
-    def remove_friend(self, account):
-        if account in self.friends.all():
-            self.friends.remove(account)
-
-    def unfriend(self, removee):
-        remover_friend_list = self
-        remover_friend_list.remove_friend(removee)
-
-        friends_list = Friendship.objects.get(user = removee)
-        friends_list.remove_friend(self.user)
-
-    def is_mutual_friend(self, friend):
-        if friend in self.friends.all():
-            return True
-        return False
 
 class Questionnaire(models.Model):
     questionnaire_name = models.CharField(max_length=100,
@@ -168,30 +164,40 @@ class Questionnaire(models.Model):
     def __str__(self):
         return self.questionnaire_name
 
+
 class Question(models.Model):
-    questionnaire = models.ForeignKey(Questionnaire,on_delete=models.CASCADE)
+    questionnaire = models.ForeignKey(Questionnaire, on_delete=models.CASCADE)
     question_text = models.CharField(max_length=200)
     question_category = models.ManyToManyField(Category,
-                                         default=None,
-                                         blank=False)
+                                               default=None,
+                                               blank=False)
 
     def __str__(self):
         return self.question_text
 
+
+class QuestionnaireResults(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    questionnaire = models.ForeignKey(Questionnaire, on_delete=models.CASCADE)
+    completed = models.BooleanField(default=False),
+    created_at = models.DateTimeField(default=datetime.now())
+
+    def __str__(self):
+        return self.user.username
+
+
 class Answer(models.Model):
-    RATING_CHOICES = ((0, "0"), (1, "1"), (2, "2"),(3, "3"),(4, "4"),(5, "5"))
-    question = models.ForeignKey(Question,on_delete=models.CASCADE)
-    answer = models.IntegerField(choices=RATING_CHOICES)
+    RATING_CHOICES = ((0, "0"), (1, "1"), (2, "2"), (3, "3"), (4, "4"), (5, "5"))
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    answer = models.IntegerField(choices=RATING_CHOICES,default=0)
+    questionnaire_result = models.ForeignKey(QuestionnaireResults, on_delete=models.CASCADE,null=True)
 
     def __str__(self):
         return u"%s - %s" % (self.question, self.answer)
 
-class QuestionnaireResults(models.Model):
- user = models.ForeignKey(User, on_delete=models.CASCADE)
- questionnaire = models.ForeignKey(Questionnaire, on_delete=models.CASCADE)
- all_answers = models.ManyToManyField(Answer, blank=False)
- completed = models.BooleanField(default=False)
-
- def __str__(self):
-     return self.user.username
-
+class Chat_Messages(models.Model):
+    sender = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='sender')
+    receiver = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='receiver')
+    content = models.TextField(blank=False)
+    created_at = models.DateTimeField(default=datetime.now, blank=False)
+    unread=models.BooleanField(default=True)

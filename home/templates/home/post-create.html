@@ -1,0 +1,60 @@
+{% extends 'home/home.html' %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
+
+
+
+    <div class="container">
+        <div class="row">
+            <!-- Latest Posts -->
+            <main class="post blog-post col-lg-8">
+                <div class="container">
+                    <div class="post-single">
+                        <form action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="post-thumbnail">
+                                <div class="col-3">
+                                    <label  class="col-form-label">Post Thumbnail: </label>
+                                </div>
+                                <div class="col-7 img-fluid">
+                                    {{ post_form.postpic }}
+                                </div>
+
+                            <div class="post-details">
+                                <div class="post-meta d-flex justify-content-between">
+                                    <div class="category">
+                                        <a href="#">{{ cat }}</a>
+                                    </div>
+                                    <div>
+                                        <a href="#">Delete</a>
+                                    </div>
+                                </div>
+                                <div class="post-body">
+                                    <div class="col-3">
+                                        <label  class="col-form-label">Post Title: </label>
+                                    </div>
+                                    <div class="col-7">
+                                        {{ post_form.title }}
+                                    </div>
+                                </div>
+                                <div class="post-body">
+                                    <div class="col-3">
+                                        <label  class="col-form-label">Post Content: </label>
+                                    </div>
+                                    <div class="col-7">
+                                        {{ post_form.content }}
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-info">Save</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </main>
+            {% include 'home/sidebar.html' with most_recent=most_recent category_count=category_count %}
+        </div>
+    </div>
+{% endblock content %}
